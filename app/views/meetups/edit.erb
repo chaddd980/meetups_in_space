@@ -1,0 +1,24 @@
+<h1> Edit Meetup </h1>
+
+<% if flash[:error_edit] %>
+      <div class="flash">
+        <div class="container">
+          <%= flash[:error_edit] %>
+        </div>
+      </div>
+    <% end %>
+
+<form class="text" method="post">
+  Name:<br>
+  <input type="text" name="name" value="<%= @meetup_to_edit.name%>"><br>
+  Description:<br>
+  <input type="text" name="description" value="<%= @meetup_to_edit.description%>"><br>
+  Date:<br>
+  <input type="text" name="date" value="dd/mm/yyyy" value="<%= @meetup_to_edit.date%>"><br>
+  Time:<br>
+  <input type="text" name="time" value="<%= @meetup_to_edit.time %>"><br>
+  Location:<br>
+  <input type="text" name="location" value="<%= @meetup_to_edit.location %>"><br>
+  <br>
+  <input type="submit" value="Submit">
+</form>

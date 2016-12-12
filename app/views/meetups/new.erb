@@ -1,0 +1,24 @@
+  <% if flash[:error] %>
+    <div class="flash">
+      <div class="container">
+        <%= flash[:error] %>
+      </div>
+    </div>
+  <% end %>
+
+<h1> New Meetup </h1>
+
+<form class="text" method="post">
+  Name:<br>
+  <input type="text" name="name" value="chadd"><br>
+  Description:<br>
+  <input type="text" name="description"><br>
+  Date:<br>
+  <input type="text" name="date" value="dd/mm/yyyy"><br>
+  Time:<br>
+  <input type="text" name="time"><br>
+  Location:<br>
+  <input type="text" name="location"><br>
+  <br>
+  <input type="submit" value="Submit">
+</form>

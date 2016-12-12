@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Meetups</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/normalize.css" />
+    <link rel="stylesheet" href="/stylesheets/app.css" />
+  </head>
+
+  <div>
+    <% if flash[:edit] %>
+      <div class="flash">
+        <div class="container">
+          <%= flash[:edit] %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if flash[:congrats] %>
+      <div class="flash">
+        <div class="container">
+          <%= flash[:congrats] %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if flash[:joined] %>
+      <div class="flash">
+        <div class="container">
+          <%= flash[:joined] %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if flash[:sign_in] %>
+      <div class="flash">
+        <div class="container">
+          <%= flash[:sign_in] %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if flash[:leave_meetup] %>
+      <div class="flash">
+        <div class="container">
+          <%= flash[:leave_meetup] %>
+        </div>
+      </div>
+    <% end %>
+
+
+
+    <h1><%= "#{@meetup.name}" %></h1><p><%= "Created By - #{@meetup.creator}"%>
+      <p><%= @meetup.description %></p>
+      <ul>
+        <li><%= @meetup.date %></li>
+        <li><%= @meetup.time %></li>
+        <li><%= @meetup.location %></li>
+      </ul>
+
+      <% if !current_user.nil? %>
+        <% if @creator == current_user.username  %>
+            <a href = "/meetups/edit/<%= @meetup.id %>"> Edit Meetup </a>
+            <form action="/delete_meetup" method="post">
+              <input id="delete" type="submit" name="delete" value="Delete" />
+            </form>
+        <% end %>
+      <% end %>
+
+      <h3>Current Members</h3>
+      <ul id="users">
+        <!-- <% @users.each do |user| %>
+          <li><img id="avatar" src="<%= user.avatar_url %>"><br><%= user.username %></li>
+        <% end %> -->
+      </ul>
+
+
+      <% if !@users.include?(current_user) %>
+        <form action="/join_this_meetup" method="post">
+          <input id="join" type="submit" name="join meetup" value="Join_Meetup" />
+        </form>
+      <% end %>
+
+      <% if @users.include?(current_user) %>
+        <form action="/leave_meetup" method="post">
+          <input id="leave" type="submit" name="leave meetup" value="Leave Meetup" />
+        </form>
+      <% end %>
+
+      <!-- <% if !@users.include?(current_user) %>
+        <form action="" method="post">
+          <input id="join" type="submit" name="join meetup" value="Join_Meetup" />
+        </form>
+      <% end %>
+       -->
+      <script src="/javascripts/vendor/jquery-1.11.2.min.js"></script>
+	    <script src="/javascripts/space.js"></script>
+  </div>
+</html>

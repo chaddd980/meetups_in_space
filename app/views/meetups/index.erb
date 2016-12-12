@@ -1,0 +1,14 @@
+<h1>Meetups</h1>
+<% if current_user %>
+  <a href ="/meetups/new">Create New Meetup</a>
+<% else %>
+  <p>Please login to create a new meetup</p>
+<% end %>
+<ul>
+  <% @meetups.each do |meetup| %>
+    <div>
+      <li><a href ="/meetups/<%= meetup.id %>"><%= "#{meetup.name}" %></a></li>
+        <p><%= "#{meetup.description}" %></p>
+    </div>
+  <% end %>
+</ul>
