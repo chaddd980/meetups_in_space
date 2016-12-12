@@ -64,30 +64,32 @@ get '/meetups/new' do
   erb :'/meetups/new'
 end
 
-# post '/meetups/:id' do
-#   if session[:user_id].nil?
-#     flash[:sign_in] = "Please sign in to join a meetup"
-#     redirect "/meetups/#{session[:current_meetup]}"
-#   end
-#
-#   session[:new_meetup_user] = UsersAndMeetup.create({
-#     user_id: session[:user_id],
-#     meetup_id: params[:id]
-#   })
-#
-#   if session[:new_meetup_user]
-#     flash[:joined] = "Congrats! you joined this meetup"
-#     redirect "/meetups/#{session[:current_meetup]}"
-#   end
-#
-# end
 
 get '/meetups/:id' do
   @meetup = Meetup.find(params[:id])
+  session[:meetup_id] = params[:id]
   @users = @meetup.users
   @creator = @meetup.creator
   session[:current_meetup] = @meetup.id
   erb :'meetups/show'
+end
+
+post '/join_meetup' do
+  if session[:user_id].nil?
+    flash[:sign_in] = "Please sign in to join a meetup"
+    redirect "/meetups/#{session[:current_meetup]}"
+  end
+  binding.pry
+  session[:new_meetup_user] = UsersAndMeetup.create({
+    user_id: session[:user_id],
+    meetup_id: session[:meetup_id]
+  })
+
+  if session[:new_meetup_user]
+    flash[:joined] = "Congrats! you joined this meetup"
+    redirect "/meetups/#{session[:current_meetup]}"
+  end
+
 end
 
 post '/meetups/edit/:id' do
@@ -131,15 +133,15 @@ post '/delete_meetup' do
   redirect "/"
 end
 
-post '/join_this_meetup' do
-  if session[:user_id].nil?
-    flash[:sign_in] = "Please sign in to join a meetup"
-    redirect "/meetups/#{session[:current_meetup]}"
-  end
-
-  session[:new_meetup_user] = UsersAndMeetup.create({
-    user_id: session[:user_id],
-    meetup_id: session[:current_meetup]
-  })
-
-end
+# post '/join_this_meetup' do
+#   if session[:user_id].nil?
+#     flash[:sign_in] = "Please sign in to join a meetup"
+#     redirect "/meetups/#{session[:current_meetup]}"
+#   end
+#
+#   session[:new_meetup_user] = UsersAndMeetup.create({
+#     user_id: session[:user_id],
+#     meetup_id: session[:current_meetup]
+#   })
+#
+# end
